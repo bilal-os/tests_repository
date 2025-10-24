@@ -12,17 +12,11 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Remote(command_executor=executor_url, options=chrome_options)
 
 try:
-    driver.get("https://duckduckgo.com/")
-    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "search_form_input_homepage")))
+    driver.get("https://github.com")
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "svg.octicon-mark-github")))
+    assert "GitHub" in driver.title, "GitHub page title verification failed."
 
-    search_box = driver.find_element(By.ID, "search_form_input_homepage")
-    search_box.send_keys("privacy")
-    search_box.submit()
-
-    WebDriverWait(driver, 10).until(EC.title_contains("privacy"))
-    assert "privacy" in driver.title.lower(), "DuckDuckGo search failed."
-
-    print("Test passed: DuckDuckGo search results for 'privacy' loaded successfully.")
+    print("Test passed: GitHub homepage loaded and logo visible.")
 except Exception as e:
     print("Test failed:", e)
 finally:

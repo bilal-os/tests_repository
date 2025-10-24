@@ -12,13 +12,14 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Remote(command_executor=executor_url, options=chrome_options)
 
 try:
-    driver.get("https://www.bbc.com")
-    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.TAG_NAME, "h3")))
+    driver.get("https://www.google.com")
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "q")))
 
-    headline = driver.find_element(By.TAG_NAME, "h3").text
-    assert headline != "", "No headline found on BBC homepage."
+    driver.find_element(By.NAME, "q").send_keys("Selenium WebDriver\n")
+    WebDriverWait(driver, 10).until(EC.title_contains("Selenium"))
+    assert "Selenium" in driver.title, "Google search test failed."
 
-    print("Test passed: BBC homepage loaded successfully with headline:", headline)
+    print("Test passed: Google search for 'Selenium WebDriver' successful.")
 except Exception as e:
     print("Test failed:", e)
 finally:
