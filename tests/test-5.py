@@ -12,11 +12,11 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Remote(command_executor=executor_url, options=chrome_options)
 
 try:
-    driver.get("https://github.com")
-    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "svg.octicon-mark-github")))
-    assert "GitHub" in driver.title, "GitHub page title verification failed."
+    driver.get("https://www.mozilla.org")
+    WebDriverWait(driver, 10).until(EC.title_contains("Mozilla"))
+    assert "Mozilla" in driver.title, "Title verification failed for Mozilla.org."
 
-    print("Test passed: GitHub homepage loaded and logo visible.")
+    print("Test passed: Mozilla.org title verified successfully.")
 except Exception as e:
     print("Test failed:", e)
 finally:
